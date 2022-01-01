@@ -16,7 +16,7 @@ Usage is simple. Simpler than Spark.
 ## Setup
 Clone this repo:
 ```
-git@github.com:andreiliphd/hans-redshift.git
+git@github.com:andreiliphd/hans-redshift-etl.git
 ```
 
 
@@ -29,6 +29,8 @@ git@github.com:andreiliphd/hans-redshift.git
 
 `etl.py` - script to run ETL process.
 
+`sql_queries.py` - queries to Redshift.
+
 `README.md` - instruction for this project.
 
 ---
@@ -37,12 +39,28 @@ git@github.com:andreiliphd/hans-redshift.git
 ## Usage
 Use the following command to execute queries on a cluster.
 
-1) Create tables.
+1) Create configuration file `dwh.cfg`.
+```python
+[CLUSTER]
+HOST={database_host}
+DB_NAME={database_name}
+DB_USER={database_username}
+DB_PASSWORD={database_password}
+DB_PORT={database_port}
+
+[IAM_ROLE]
+ARN= {arn_aws_iam}
+
+[S3]
+LOG_DATA=s3://udacity-dend/log_data
+LOG_JSONPATH=s3://udacity-dend/log_json_path.json
+SONG_DATA=s3://udacity-dend/song_data
+```
+2) Create tables.
 ```shell
 python create_tables.py
 ```
-
-2) Load data to tables.
+3) Load data to tables.
 ```shell
 python etl.py
 ```
